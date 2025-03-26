@@ -2,9 +2,27 @@
 import React from 'react';
 import Button from './Button';
 import AnimatedSection from './AnimatedSection';
-import { ArrowRight, Braces, LineChart, BarChart } from 'lucide-react';
+import { ArrowRight, Braces, LineChart, BarChart, Award, Shield } from 'lucide-react';
+import { trackEvent } from '@/services/analytics';
+import LazyImage from './LazyImage';
 
 const HeroSection: React.FC = () => {
+  const handleBookConsultation = () => {
+    trackEvent('CTA', 'Click', 'Book Consultation');
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleExploreServices = () => {
+    trackEvent('CTA', 'Click', 'Explore Services');
+    const servicesSection = document.getElementById('services');
+    if (servicesSection) {
+      servicesSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="pt-32 pb-20 md:pt-40 md:pb-32 bg-ai-grid bg-white relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white/30 to-white/90"></div>
@@ -16,8 +34,9 @@ const HeroSection: React.FC = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
           <AnimatedSection>
-            <div className="inline-block px-4 py-1.5 mb-6 rounded-full bg-synthium-50 text-synthium-600 text-sm font-medium border border-synthium-100">
-              AI-Powered Business Transformation
+            <div className="inline-flex items-center px-4 py-1.5 mb-6 rounded-full bg-synthium-50 text-synthium-600 text-sm font-medium border border-synthium-100">
+              <Award size={16} className="mr-2" />
+              <span>Leading AI Solutions Provider</span>
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 text-balance leading-tight">
               Transform Your Business With <span className="text-gradient-blend">Intelligent AI</span> Solutions
@@ -37,12 +56,30 @@ const HeroSection: React.FC = () => {
                 variant="primary" 
                 icon={<ArrowRight size={20} />}
                 className="font-medium"
+                onClick={handleBookConsultation}
               >
                 Book Free Consultation
               </Button>
-              <Button size="lg" variant="outline">
+              <Button 
+                size="lg" 
+                variant="outline"
+                onClick={handleExploreServices}
+              >
                 Explore Services
               </Button>
+            </div>
+          </AnimatedSection>
+          
+          <AnimatedSection delay={500} className="mt-8">
+            <div className="flex flex-wrap justify-center gap-4 items-center">
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-green-50 text-green-600 text-sm font-medium border border-green-100">
+                <Shield size={16} />
+                <span>Enterprise-grade Security</span>
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 text-blue-600 text-sm font-medium border border-blue-100">
+                <Award size={16} />
+                <span>ISO 27001 Certified</span>
+              </div>
             </div>
           </AnimatedSection>
           

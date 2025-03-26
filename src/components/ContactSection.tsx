@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import AnimatedSection from './AnimatedSection';
 import Button from './Button';
 import { useToast } from "@/hooks/use-toast";
-import { Mail, Phone, MapPin, Send, ArrowRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, ArrowRight, Check } from 'lucide-react';
+import { trackFormSubmission, trackEvent } from '@/services/analytics';
 
 const ContactSection: React.FC = () => {
   const { toast } = useToast();
@@ -11,32 +12,96 @@ const ContactSection: React.FC = () => {
     name: '',
     email: '',
     company: '',
+    phone: '',
+    serviceInterest: '',
     message: '',
+    consent: false
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [step, setStep] = useState(1);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const aiServices = [
+    'AI Strategy Consulting',
+    'Custom AI Solutions',
+    'AI Integration Services',
+    'AI Training & Workshops',
+    'AI Maintenance & Support',
+    'Not sure yet'
+  ];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target as HTMLInputElement;
+    const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
+    
+    setFormData((prev) => ({ ...prev, [name]: val }));
+    
+    // Track service interest if the service field is changed
+    if (name === 'serviceInterest' && value !== '') {
+      trackEvent('Form', 'ServiceSelected', value);
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real implementation, you would send this data to your backend
-    console.log('Form submitted:', formData);
     
-    // Show success message
-    toast({
-      title: "Message sent!",
-      description: "We'll get back to you as soon as possible.",
-    });
+    if (step === 1) {
+      // Validate first step
+      if (!formData.name || !formData.email) {
+        toast({
+          title: "Missing information",
+          description: "Please fill in your name and email address.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Proceed to second step
+      setStep(2);
+      trackEvent('Form', 'Step1Complete');
+      return;
+    }
     
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      message: '',
-    });
+    // Submit the form
+    setIsSubmitting(true);
+    
+    try {
+      // In a real implementation, you would send this data to your backend
+      console.log('Form submitted:', formData);
+      
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Track form submission
+      trackFormSubmission('contact');
+      
+      // Show success message
+      toast({
+        title: "Message sent!",
+        description: "We'll get back to you as soon as possible.",
+      });
+      
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        phone: '',
+        serviceInterest: '',
+        message: '',
+        consent: false
+      });
+      
+      // Reset to step 1
+      setStep(1);
+    } catch (error) {
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -94,86 +159,183 @@ const ContactSection: React.FC = () => {
                   </div>
                   
                   <div className="mt-12 pt-8 border-t border-white/20">
-                    <p className="text-white/80 mb-4">Follow us on social media</p>
-                    <div className="flex space-x-4">
-                      {['Twitter', 'LinkedIn', 'Facebook'].map((platform) => (
-                        <a key={platform} href="#" className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors">
-                          {platform[0]}
-                        </a>
-                      ))}
+                    <div className="space-y-4 mb-6">
+                      <h4 className="font-semibold">Our clients see:</h4>
+                      <div className="flex items-start gap-2">
+                        <Check size={16} className="mt-1 flex-shrink-0" />
+                        <p className="text-sm text-white/90">40% reduction in operational costs</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Check size={16} className="mt-1 flex-shrink-0" />
+                        <p className="text-sm text-white/90">60% faster data analysis & insights</p>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <Check size={16} className="mt-1 flex-shrink-0" />
+                        <p className="text-sm text-white/90">35% increase in customer satisfaction</p>
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <p className="text-white/80 mb-4">Follow us on social media</p>
+                      <div className="flex space-x-4">
+                        {['Twitter', 'LinkedIn', 'Facebook'].map((platform) => (
+                          <a 
+                            key={platform} 
+                            href="#" 
+                            className="p-2 bg-white/10 rounded-lg hover:bg-white/20 transition-colors"
+                            onClick={() => trackEvent('Social', 'Click', platform)}
+                          >
+                            {platform[0]}
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
                 
                 <div className="lg:col-span-3 p-8 lg:p-12">
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                          Full Name
-                        </label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                          Email Address
-                        </label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
-                          required
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-                        Company Name
-                      </label>
-                      <input
-                        type="text"
-                        id="company"
-                        name="company"
-                        value={formData.company}
-                        onChange={handleChange}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                        How can we help?
-                      </label>
-                      <textarea
-                        id="message"
-                        name="message"
-                        value={formData.message}
-                        onChange={handleChange}
-                        rows={4}
-                        className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
-                        required
-                      ></textarea>
-                    </div>
-                    <div>
-                      <Button 
-                        type="submit" 
-                        variant="primary" 
-                        className="w-full" 
-                        icon={<Send size={18} />}
-                      >
-                        Send Message
-                      </Button>
-                    </div>
+                    {step === 1 ? (
+                      <>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                              Full Name*
+                            </label>
+                            <input
+                              type="text"
+                              id="name"
+                              name="name"
+                              value={formData.name}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
+                              required
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                              Email Address*
+                            </label>
+                            <input
+                              type="email"
+                              id="email"
+                              name="email"
+                              value={formData.email}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
+                              Company Name
+                            </label>
+                            <input
+                              type="text"
+                              id="company"
+                              name="company"
+                              value={formData.company}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
+                            />
+                          </div>
+                          <div>
+                            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+                              Phone Number
+                            </label>
+                            <input
+                              type="tel"
+                              id="phone"
+                              name="phone"
+                              value={formData.phone}
+                              onChange={handleChange}
+                              className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <Button 
+                            type="submit" 
+                            variant="primary" 
+                            className="w-full" 
+                            icon={<ArrowRight size={18} />}
+                          >
+                            Continue
+                          </Button>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div>
+                          <label htmlFor="serviceInterest" className="block text-sm font-medium text-gray-700 mb-1">
+                            Which AI service are you interested in?
+                          </label>
+                          <select
+                            id="serviceInterest"
+                            name="serviceInterest"
+                            value={formData.serviceInterest}
+                            onChange={handleChange}
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
+                          >
+                            <option value="">Select a service...</option>
+                            {aiServices.map((service) => (
+                              <option key={service} value={service}>
+                                {service}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                            How can we help with your AI needs?
+                          </label>
+                          <textarea
+                            id="message"
+                            name="message"
+                            value={formData.message}
+                            onChange={handleChange}
+                            rows={4}
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-synthium-500 focus:border-transparent transition"
+                            required
+                          ></textarea>
+                        </div>
+                        <div className="flex items-start">
+                          <input
+                            type="checkbox"
+                            id="consent"
+                            name="consent"
+                            checked={formData.consent}
+                            onChange={handleChange}
+                            className="mt-1 mr-2"
+                            required
+                          />
+                          <label htmlFor="consent" className="text-sm text-gray-600">
+                            I agree to receive communications from SynthiumAI about their services and AI industry insights. View our <a href="#" className="text-synthium-500 hover:underline">Privacy Policy</a>.
+                          </label>
+                        </div>
+                        <div className="flex gap-4">
+                          <Button 
+                            type="button" 
+                            variant="outline" 
+                            className="w-1/3" 
+                            onClick={() => setStep(1)}
+                          >
+                            Back
+                          </Button>
+                          <Button 
+                            type="submit" 
+                            variant="primary" 
+                            className="w-2/3" 
+                            icon={<Send size={18} />}
+                            disabled={isSubmitting}
+                          >
+                            {isSubmitting ? 'Sending...' : 'Send Message'}
+                          </Button>
+                        </div>
+                      </>
+                    )}
                   </form>
                 </div>
               </div>
