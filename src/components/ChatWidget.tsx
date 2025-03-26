@@ -76,7 +76,9 @@ const ChatWidget: React.FC = () => {
                 variant="primary"
                 className="px-3"
                 icon={<Send size={16} />}
-              />
+              >
+                Send
+              </Button>
             </div>
           </form>
         </div>
