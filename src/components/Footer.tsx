@@ -2,6 +2,7 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface FooterProps {
   className?: string;
@@ -14,28 +15,28 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
     {
       title: 'Company',
       links: [
-        { name: 'About', href: '#' },
-        { name: 'Team', href: '#' },
-        { name: 'Careers', href: '#' },
-        { name: 'Privacy', href: '#' },
+        { name: 'About', href: '/about' },
+        { name: 'Team', href: '/team' },
+        { name: 'Careers', href: '/careers' },
+        { name: 'Privacy', href: '/privacy' },
       ],
     },
     {
       title: 'Services',
       links: [
-        { name: 'AI Strategy', href: '#' },
-        { name: 'Custom Solutions', href: '#' },
-        { name: 'Integration', href: '#' },
-        { name: 'Training', href: '#' },
+        { name: 'AI Strategy', href: '/services/ai-strategy' },
+        { name: 'Custom Solutions', href: '/services/custom-solutions' },
+        { name: 'Integration', href: '/services/integration' },
+        { name: 'Training', href: '/services/training' },
       ],
     },
     {
       title: 'Resources',
       links: [
-        { name: 'Blog', href: '#' },
-        { name: 'Case Studies', href: '#' },
-        { name: 'Guides', href: '#' },
-        { name: 'FAQ', href: '#' },
+        { name: 'Blog', href: '/blog' },
+        { name: 'Case Studies', href: '/case-studies' },
+        { name: 'Guides', href: '/guides' },
+        { name: 'FAQ', href: '/faq' },
       ],
     },
   ];
@@ -45,10 +46,12 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           <div className="lg:col-span-2">
-            <div className="font-display text-2xl font-bold mb-4">
-              <span className="text-gradient-primary">Synthium</span>
-              <span className="text-sm font-medium text-synthium-500 ml-1">AI</span>
-            </div>
+            <Link to="/" className="inline-block mb-4">
+              <div className="font-display text-2xl font-bold">
+                <span className="text-gradient-primary">Synthium</span>
+                <span className="text-sm font-medium text-synthium-500 ml-1">AI</span>
+              </div>
+            </Link>
             <p className="text-gray-600 mb-6 max-w-md">
               Transforming businesses through intelligent AI solutions. We help organizations leverage artificial intelligence to innovate, automate, and grow.
             </p>
@@ -71,13 +74,13 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
               <ul className="space-y-3">
                 {group.links.map((link) => (
                   <li key={link.name}>
-                    <a 
-                      href={link.href} 
+                    <Link 
+                      to={link.href} 
                       className="text-gray-600 hover:text-synthium-500 transition-colors flex items-center group"
                     >
                       <span>{link.name}</span>
                       <ArrowRight size={16} className="ml-1 opacity-0 group-hover:opacity-100 transform -translate-x-2 group-hover:translate-x-0 transition-all" />
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -90,15 +93,15 @@ const Footer: React.FC<FooterProps> = ({ className }) => {
             © {currentYear} SynthiumAI. All rights reserved.
           </p>
           <div className="flex space-x-6">
-            <a href="#" className="text-gray-500 hover:text-synthium-500 transition-colors text-sm">
+            <Link to="/privacy" className="text-gray-500 hover:text-synthium-500 transition-colors text-sm">
               Terms of Service
-            </a>
-            <a href="#" className="text-gray-500 hover:text-synthium-500 transition-colors text-sm">
+            </Link>
+            <Link to="/privacy" className="text-gray-500 hover:text-synthium-500 transition-colors text-sm">
               Privacy Policy
-            </a>
-            <a href="#" className="text-gray-500 hover:text-synthium-500 transition-colors text-sm">
+            </Link>
+            <Link to="/privacy" className="text-gray-500 hover:text-synthium-500 transition-colors text-sm">
               Cookie Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>
