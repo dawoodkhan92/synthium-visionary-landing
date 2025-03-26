@@ -2,7 +2,7 @@
 import React from 'react';
 import Button from './Button';
 import AnimatedSection from './AnimatedSection';
-import { ArrowRight, Bar, Braces, LineChart, BarChart } from 'lucide-react';
+import { ArrowRight, Braces, LineChart, BarChart } from 'lucide-react';
 
 const HeroSection: React.FC = () => {
   return (
@@ -51,7 +51,7 @@ const HeroSection: React.FC = () => {
               <p className="text-sm text-gray-500 mb-6">Trusted by innovative companies worldwide</p>
               <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12">
                 <div className="flex items-center gap-2 text-gray-400 font-semibold">
-                  <Bar size={20} className="text-synthium-500" />
+                  <BarChart size={20} className="text-synthium-500" />
                   <span>Microsoft</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-400 font-semibold">
@@ -67,7 +67,7 @@ const HeroSection: React.FC = () => {
                   <span>Intel</span>
                 </div>
                 <div className="flex items-center gap-2 text-gray-400 font-semibold">
-                  <Bar size={20} className="text-synthium-500" />
+                  <BarChart size={20} className="text-synthium-500" />
                   <span>IBM</span>
                 </div>
               </div>
