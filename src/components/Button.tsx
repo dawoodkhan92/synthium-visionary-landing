@@ -3,11 +3,12 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'outline' | 'ghost' | 'link';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'link';
   size?: 'sm' | 'md' | 'lg';
   children: React.ReactNode;
   className?: string;
   onClick?: () => void;
+  icon?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -16,15 +17,17 @@ const Button: React.FC<ButtonProps> = ({
   children,
   className,
   onClick,
+  icon,
   ...props
 }) => {
-  const baseStyles = "relative inline-flex items-center justify-center rounded-full font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-synthium-500 overflow-hidden";
+  const baseStyles = "relative inline-flex items-center justify-center rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 overflow-hidden";
   
   const variants = {
-    primary: "bg-synthium-600 text-white hover:bg-synthium-700 shadow-sm",
-    outline: "border border-synthium-600 text-synthium-600 hover:bg-synthium-50 hover:text-synthium-700",
-    ghost: "text-synthium-600 hover:bg-synthium-50 hover:text-synthium-700",
-    link: "text-synthium-600 hover:underline underline-offset-4 hover:text-synthium-700"
+    primary: "bg-synthium-500 text-white hover:bg-synthium-600 shadow-sm focus:ring-synthium-500",
+    secondary: "bg-purple-600 text-white hover:bg-purple-700 shadow-sm focus:ring-purple-600",
+    outline: "border border-synthium-500 text-synthium-500 hover:bg-synthium-50 hover:text-synthium-600 focus:ring-synthium-500",
+    ghost: "text-synthium-500 hover:bg-synthium-50 hover:text-synthium-600",
+    link: "text-synthium-500 hover:underline underline-offset-4 hover:text-synthium-600"
   };
   
   const sizes = {
@@ -60,6 +63,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={handleClick}
       {...props}
     >
+      {icon && <span className="mr-2">{icon}</span>}
       {children}
     </button>
   );

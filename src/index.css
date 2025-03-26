@@ -6,17 +6,17 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 222.2 47.4% 11.2%; /* #1F2937 */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 222.2 47.4% 11.2%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 120 100% 20%;
+    --popover-foreground: 222.2 47.4% 11.2%;
+    --primary: 217.2 91.2% 59.8%; /* #2563EB */
     --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 263.4 70% 50.4%; /* #7C3AED */
+    --secondary-foreground: 210 40% 98%;
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 215.4 16.3% 46.9%; /* #6B7280 */
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
@@ -33,20 +33,43 @@
 
   html {
     scroll-behavior: smooth;
+    font-size: 16px;
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    line-height: 1.5;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display tracking-tight;
+    @apply font-bold tracking-tight;
+    line-height: 1.2;
+  }
+  
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+  
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+  
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+  
+  p {
+    @apply text-base md:text-lg;
   }
 }
 
 @layer components {
   .glass {
-    @apply bg-white/80 backdrop-blur-lg border border-white/20 shadow-sm;
+    @apply bg-white/95 backdrop-blur-lg border border-white/20 shadow-sm;
   }
   
   .glass-dark {
@@ -80,6 +103,38 @@
   .reveal-visible-scale {
     @apply animate-scale-in;
   }
+  
+  .btn {
+    @apply relative inline-flex items-center justify-center rounded-lg font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 overflow-hidden;
+  }
+  
+  .btn-primary {
+    @apply bg-synthium-500 text-white hover:bg-synthium-600 focus:ring-synthium-500;
+  }
+  
+  .btn-secondary {
+    @apply bg-purple-600 text-white hover:bg-purple-700 focus:ring-purple-600;
+  }
+  
+  .btn-outline {
+    @apply border border-synthium-500 text-synthium-500 hover:bg-synthium-50 hover:text-synthium-600 focus:ring-synthium-500;
+  }
+  
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  .service-icon {
+    @apply w-14 h-14 rounded-xl flex items-center justify-center mb-6 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-3;
+  }
+  
+  .service-icon-primary {
+    @apply bg-synthium-50 text-synthium-500;
+  }
+  
+  .service-icon-secondary {
+    @apply bg-purple-50 text-purple-600;
+  }
 }
 
 @layer utilities {
@@ -87,7 +142,27 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   }
   
-  .text-gradient {
-    @apply bg-gradient-to-r from-synthium-600 to-synthium-800 bg-clip-text text-transparent;
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-synthium-500 to-synthium-700 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-secondary {
+    @apply bg-gradient-to-r from-purple-500 to-purple-700 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-blend {
+    @apply bg-gradient-to-r from-synthium-500 via-purple-500 to-synthium-700 bg-clip-text text-transparent;
+  }
+  
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-synthium-500 to-synthium-700;
+  }
+  
+  .bg-gradient-secondary {
+    @apply bg-gradient-to-br from-purple-500 to-purple-700;
+  }
+  
+  .bg-gradient-blend {
+    @apply bg-gradient-to-br from-synthium-500 via-purple-600 to-synthium-700;
   }
 }

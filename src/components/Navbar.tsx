@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Button from './Button';
 
@@ -35,15 +35,15 @@ const Navbar: React.FC = () => {
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full',
         scrolled 
-          ? 'py-3 glass shadow-sm border-b border-white/20' 
+          ? 'py-3 glass shadow-sm border-b border-gray-100' 
           : 'py-5 bg-transparent'
       )}
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         <a href="#" className="flex items-center">
-          <div className="font-display text-2xl font-semibold">
-            <span className="text-gradient">Synthium</span>
-            <span className="text-sm font-medium text-synthium-600 ml-1">AI</span>
+          <div className="font-display text-2xl font-bold">
+            <span className="text-gradient-primary">Synthium</span>
+            <span className="text-sm font-medium text-synthium-500 ml-1">AI</span>
           </div>
         </a>
 
@@ -53,7 +53,7 @@ const Navbar: React.FC = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-gray-700 hover:text-synthium-600 font-medium transition-colors"
+              className="text-gray-700 hover:text-synthium-500 font-medium transition-colors"
             >
               {link.name}
             </a>
@@ -75,7 +75,7 @@ const Navbar: React.FC = () => {
       {/* Mobile menu */}
       <div
         className={cn(
-          'md:hidden absolute left-0 right-0 top-full glass border-b border-white/20 shadow-sm transition-all duration-300 ease-in-out overflow-hidden',
+          'md:hidden absolute left-0 right-0 top-full glass border-b border-gray-100 shadow-sm transition-all duration-300 ease-in-out overflow-hidden',
           isOpen ? 'max-h-96 py-4' : 'max-h-0'
         )}
       >
@@ -84,7 +84,7 @@ const Navbar: React.FC = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-gray-700 hover:text-synthium-600 py-2 font-medium transition-colors"
+              className="text-gray-700 hover:text-synthium-500 py-2 font-medium transition-colors"
               onClick={() => setIsOpen(false)}
             >
               {link.name}

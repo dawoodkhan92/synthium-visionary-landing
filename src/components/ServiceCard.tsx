@@ -8,6 +8,7 @@ interface ServiceCardProps {
   description: string;
   icon: LucideIcon;
   delay?: number;
+  variant?: 'primary' | 'secondary';
 }
 
 const ServiceCard: React.FC<ServiceCardProps> = ({
@@ -15,13 +16,17 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   description,
   icon: Icon,
   delay = 0,
+  variant = 'primary',
 }) => {
   return (
     <div 
-      className="glass p-8 rounded-2xl transition-all duration-300 hover:shadow-md group h-full"
+      className="glass p-8 rounded-xl transition-all duration-300 hover:shadow-lg hover:-translate-y-1 group h-full"
       style={{ animationDelay: `${delay}ms` }}
     >
-      <div className="w-14 h-14 rounded-xl bg-synthium-50 flex items-center justify-center mb-6 text-synthium-600 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:rotate-3">
+      <div className={cn(
+        "service-icon",
+        variant === 'primary' ? "service-icon-primary" : "service-icon-secondary"
+      )}>
         <Icon size={28} className="transition-transform duration-500 ease-out" />
       </div>
       <h3 className="text-xl font-semibold mb-3 text-gray-900">{title}</h3>

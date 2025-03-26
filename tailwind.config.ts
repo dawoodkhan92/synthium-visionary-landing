@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -30,16 +29,31 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				synthium: {
-					50: '#e8f6e8',
-					100: '#c5e6c5',
-					200: '#9fd59f',
-					300: '#78c478',
-					400: '#4eb74e',
-					500: '#33a133',
-					600: '#2a9429',
-					700: '#1e841e',
-					800: '#127512',
-					900: '#005800',
+					50: '#f0f6ff',
+					100: '#e0eaff',
+					200: '#c7d7fe',
+					300: '#a3bcfc',
+					400: '#7a96f7',
+					500: '#2563EB', // Primary blue
+					600: '#2051c5',
+					700: '#1e40af',
+					800: '#1d3591',
+					900: '#1e2e6f',
+				},
+				purple: {
+					50: '#f5f3ff',
+					100: '#ede9fe',
+					200: '#ddd6fe',
+					300: '#c4b5fd',
+					400: '#a78bfa',
+					500: '#8b5cf6',
+					600: '#7C3AED', // Secondary purple
+					700: '#6d28d9',
+					800: '#5b21b6',
+					900: '#4c1d95',
+				},
+				success: {
+					DEFAULT: '#10B981', // Success green
 				},
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
@@ -69,16 +83,6 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
-				}
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -87,7 +91,7 @@ export default {
 			},
 			fontFamily: {
 				sans: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],
-				display: ['SF Pro Display', 'Inter', 'system-ui', 'sans-serif'],
+				display: ['Inter', 'SF Pro Display', 'system-ui', 'sans-serif'],
 			},
 			keyframes: {
 				'accordion-down': {
@@ -140,7 +144,9 @@ export default {
 			},
 			backgroundImage: {
 				'hero-pattern': "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2NzYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9InBhdHRlcm4iIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCI+PHBhdGggZD0iTSAwIDUgTCA1IDAgTCAxNSAwIEwgMjAgNSBMIDIwIDE1IEwgMTUgMjAgTCA1IDIwIEwgMCA1IiBzdHJva2U9IiM5Q0E3QjgiIHN0cm9rZS1vcGFjaXR5PSIwLjAzIiBmaWxsPSJub25lIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI3BhdHRlcm4pIi8+PC9zdmc+')",
-			},
+				'ai-grid': "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSI2NzYiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9InBhdHRlcm4iIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTSAwIDIwIEwgNDAgMjAiIHN0cm9rZT0iIzJCNjVFQyIgc3Ryb2tlLW9wYWNpdHk9IjAuMDIiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNIDIwIDAgTCAyMCA0MCIgc3Ryb2tlPSIjMkI2NUVDIiBzdHJva2Utb3BhY2l0eT0iMC4wMiIgZmlsbD0ibm9uZSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==')",
+				'wave-pattern': "url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQ0MCIgaGVpZ2h0PSIxMDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMjVDMjAwIDc1IDQwMCAyNSA2MDAgNzVTMTAwMCAyNSAxMjAwIDc1IDE2MDAgMjUgMTgwMCA3NVYxMDBIMFYyNVoiIGZpbGw9IiNmMGY2ZmYiIGZpbGxvcGFjaXR5PSIwLjgiLz48L3N2Zz4=')",
+			}
 		}
 	},
 	plugins: [require("tailwindcss-animate")],
